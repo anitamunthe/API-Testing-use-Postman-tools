@@ -1,0 +1,1380 @@
+{
+	"info": {
+		"_postman_id": "a94ccb81-6df0-4302-aaa9-eac5371c29af",
+		"name": "ALBA-COLLECTION",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26450782"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Positive Test Case \r",
+									"//Register user\r",
+									"// pm.test(\"Register berhasil\", function () {\r",
+									"//     pm.response.to.have.status(201);\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"success\", true);\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\", \"registered\");\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Response contains token\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"\r",
+									"//     // Cek token di dalam data\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"token\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"token_type\", \"Bearer\");\r",
+									"\r",
+									"//     // Simpan token user ke environment\r",
+									"//     pm.environment.set(\"user_token\", jsonData.data.token);\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"//Register Admin\r",
+									"pm.test(\"Register Admin berhasil\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData).to.have.property(\"success\", true);\r",
+									"    pm.expect(jsonData).to.have.property(\"message\", \"registered\");\r",
+									"\r",
+									"    pm.expect(jsonData.data).to.have.property(\"token\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"token_type\", \"Bearer\");\r",
+									"\r",
+									"    // Simpan token admin\r",
+									"    pm.environment.set(\"admin_token\", jsonData.data.token);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"//Negative Case\r",
+									"//1\r",
+									"// pm.test(\"Register duplicate email with Status 422\", function () {\r",
+									"//     pm.expect([409,422]).to.include(pm.response.code);\r",
+									"// });\r",
+									"// pm.test(\"Has validation error\", function () {\r",
+									"//     var json = pm.response.json();\r",
+									"//     pm.expect(json).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"//2\r",
+									"// pm.test(\"Register with Empty Fields - Status 422\", function () {\r",
+									"//     pm.response.to.have.status(422);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Register with Empty Fields - status 422\", function () {\r",
+									"//     var json = pm.response.json();\r",
+									"//     // mengecek apakah response JSON mempunyai field 'errors' \r",
+									"//     pm.expect(json).to.have.property(\"message\");\r",
+									"//     if (json.errors) {\r",
+									"//         pm.expect(json.errors).to.be.an(\"object\");\r",
+									"//         pm.expect(json.errors).to.have.any.keys(\"username\", \"email\", \"password\", \"name\");\r",
+									"//     }\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "username",
+								"value": "william",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "email",
+								"value": "william@example.com",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "123456789",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "name",
+								"value": "William Hubertus",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Admin9\",\r\n  \"email\": \"admin9@gmail.com\",\r\n  \"password\": \"admin9123\",\r\n  \"name\": \"admin9\",\r\n  \"profile_photo\": null\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Positive Test Case\r",
+									"pm.test(\"Login berhasil\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.expect(pm.response.json().data).to.have.property(\"token\");\r",
+									"});\r",
+									"// simpan token admin\r",
+									"pm.environment.set(\"user_token\", pm.response.json().data.token);\r",
+									"\r",
+									"\r",
+									"//Negative Test Case\r",
+									"//1\r",
+									"// pm.test(\"Login Invalid Password\", function () { \r",
+									"//     pm.expect([401, 422]).to.include(pm.response.code);\r",
+									"// });\r",
+									"// pm.test(\"Invalid credentials message\", function () {\r",
+									"//     var json = pm.response.json();\r",
+									"//     pm.expect(json.message).to.match(/Password salah/i); // \r",
+									"// });\r",
+									"\r",
+									"//2\r",
+									"// pm.test(\"Login dengan email belum terdaftar\", function () {\r",
+									"//     pm.expect([422]).to.include(pm.response.code);\r",
+									"// });\r",
+									"// pm.test(\"Email belum terdaftar - Error message\", function () {\r",
+									"//     var json = pm.response.json();\r",
+									"//     pm.expect(json).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"//3\r",
+									"// pm.test(\"Login tanpa email atau password\", function () {\r",
+									"//     pm.expect([422]).to.include(pm.response.code);\r",
+									"// });\r",
+									"// pm.test(\"Login tanpa email atau password - Error message\", function() {\r",
+									"//     var json = pm.response.json();\r",
+									"//     pm.expect(json).to.have.property(\"message\");\r",
+									"// });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin8@gmail.com\",\r\n  \"password\": \"admin8123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CATEGORY",
+			"item": [
+				{
+					"name": "CreateCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Positive Test Case\r",
+									"//     pm.test(\"Create Category berhasil\", function () {\r",
+									"//     pm.response.to.have.status(201);\r",
+									"// });\r",
+									"//     pm.test(\"Create Category - Has Required Properties \", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"category\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"created_at\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"updated_at\");\r",
+									"\r",
+									"// // menyimpan id category ke environment untuk request selanjutnya\r",
+									"//     pm.environment.set(\"category_id\", jsonData.data.id);\r",
+									"// });\r",
+									"\r",
+									"//Negative Test Case\r",
+									"//1\r",
+									"// pm.test(\"Create Category gagal tanpa token / bukan admin\", function () {\r",
+									"//     pm.expect([401]).to.include(pm.response.code);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Create Category gagal tanpa token / bukan admin - Error message\", function() { //cek body response punya error message\r",
+									"//     var json = pm.response.json();\r",
+									"//     pm.expect(json).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"//2\r",
+									"// pm.test(\"Create Category token user\", function () {\r",
+									"//     pm.expect([403]).to.include(pm.response.code);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Create Category pakai token user - Error message\", function() { //cek body response punya error message\r",
+									"//     var json = pm.response.json();\r",
+									"//     pm.expect(json).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"//3\r",
+									"// pm.test(\"Create category duplikat gagal\"), function() {\r",
+									"//     pm.expect([422]).to.include(pm.response.code);\r",
+									"// }\r",
+									"\r",
+									"\r",
+									"//4\r",
+									"    pm.test(\"Admin membuat category tanpa field category\"), function (){\r",
+									"        pm.expect([400, 422]).to.include(pm.response.code);\r",
+									"        pm.expect(json).to.have.property(\"message\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"category\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Positive Test Case\r",
+									"//     pm.test(\"Get Category berhasil\", function () {\r",
+									"//     pm.response.to.have.status(200);\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"category\");\r",
+									"// });\r",
+									"\r",
+									"//Negative Test Case\r",
+									"//1\r",
+									"// pm.test(\"Get Categories gagal tanpa token\", function () {\r",
+									"//     pm.response.to.have.status(401);\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"//2\r",
+									"    pm.test(\"Get Categories token user\", function () {\r",
+									"        pm.response.to.have.status(403);\r",
+									"        var jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Positive Test Case - Edit Category\r",
+									"// pm.test(\"Edit Category berhasil\", function () {\r",
+									"//     pm.response.to.have.status(200);\r",
+									"//     let jsonData = pm.response.json();\r",
+									"\r",
+									"//     // ambil id dari environment\r",
+									"//     let expectedId = pm.environment.get(\"category_id\");\r",
+									"\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"id\", parseInt(expectedId));\r",
+									"//     pm.expect(jsonData.data.category).to.eql(\"New Tech 3\");\r",
+									"// });\r",
+									"\r",
+									"//Negative Test Case\r",
+									"//1\r",
+									"// pm.test(\"Edit Category gagal tanpa token\", function () {\r",
+									"//     pm.expect([401]).to.include(pm.response.code);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Edit Category gagal tanpa token - Error message\", function () {\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"//2\r",
+									"    // pm.test(\"Edit Category gagal pakai token user\", function () {\r",
+									"    //     pm.expect([403]).to.include(pm.response.code);\r",
+									"    // });\r",
+									"\r",
+									"    // pm.test(\"Edit Category gagal pakai token user - Error message\", function () {\r",
+									"    //     let jsonData = pm.response.json();\r",
+									"    //     pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    // });\r",
+									"\r",
+									"//3\r",
+									"    pm.test(\"Edit Category gagal tanpa ID\", function () {\r",
+									"        pm.expect([405]).to.include(pm.response.code);\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Edit Category gagal tanpa ID - Error message\", function () {\r",
+									"        let jsonData = pm.response.json();\r",
+									"        pm.expect(jsonData).to.have.property(\"message\");\r",
+									"    });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"category\": \"New Tech 3\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCategories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get Categories gagal tanpa id\", function () {\r",
+									"    pm.response.to.have.status(400, 404);\r",
+									"    var json=pm.response.json();\r",
+									"    pm.expect(json).to.have.property(\"message\");\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/categories",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "createArticle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// // Positive Test Case\r",
+									"//     pm.test(\"Create Article berhasil\", function () {\r",
+									"//     pm.response.to.have.status(201);\r",
+									"\r",
+									"//     let jsonData = pm.response.json();\r",
+									"\r",
+									"//     pm.expect(jsonData).to.have.property(\"data\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"title\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"content\");\r",
+									"//     pm.expect(jsonData.data).to.have.property(\"category\");\r",
+									"\r",
+									"//     console.log(jsonData);\r",
+									"\r",
+									"//     // menyimpan postId untuk request berikutnya\r",
+									"//     pm.environment.set(\"postId\", jsonData.data.id);\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"//negative test Case\r",
+									"// //1\r",
+									"pm.test(\"Create Post gagal pakai token user\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"message\", \"Only admin can access this resource\");\r",
+									"});\r",
+									"\r",
+									"// //2\r",
+									"// pm.test(\"Create Post gagal tanpa token\", function () {\r",
+									"//     pm.response.to.have.status(401);\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\", \"Unauthorized\");\r",
+									"// });\r",
+									"\r",
+									"// //3\r",
+									"// pm.test(\"Create Post gagal category kosong\", function () {\r",
+									"//     pm.response.to.have.status(422);\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"// //4\r",
+									"// pm.test(\"Create Post gagal cover image kosong\", function () {\r",
+									"//     pm.response.to.have.status(422);\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\");\r",
+									"// });\r",
+									"\r",
+									"// //4\r",
+									"// pm.test(\"Create Post gagal pakai category id yang sudah dihapus\", function () {\r",
+									"//     pm.response.to.have.status(422);\r",
+									"//     let jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData).to.have.property(\"message\");\r",
+									"// });"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Luciana\n",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "ipsum lorem",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "cover_image",
+									"type": "file",
+									"src": "/C:/Users/William Situmorang/Downloads/dummy_foto.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GET post by ID berhasil\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"title\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"content\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"category\");\r",
+									"});\r",
+									"\r",
+									"//Negative Test Case\r",
+									"pm.test(\"Create Post gagal category kosong\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									"//2\r",
+									"pm.test(\"Create Post gagal cover image kosong\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//3\r",
+									"pm.test(\"Create Post gagal bukan admin\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteArticle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete Post berhasil (soft delete)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"success\", true);\r",
+									"    pm.expect(jsonData).to.have.property(\"message\", \"Post soft deleted\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts/5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateArticle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Positif Test Case\r",
+									"pm.test(\"Update Article berhasil (admin)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"data\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"});\r",
+									"\r",
+									"//Negative Test Case\r",
+									"//1\r",
+									"pm.test(\"Update Article gagal (id salah)\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"//2\r",
+									"pm.test(\"Update Article gagal pakai token user\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Judul Pertama Update",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Ini isi artikel.",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category_id",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "cover_image",
+									"type": "file",
+									"src": "/C:/Users/William Situmorang/Downloads/profile_william.jpg",
+									"disabled": true
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts/5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPosts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get All Articles berhasil\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Positif Test Case\r",
+									"pm.test(\"Get Article by ID berhasil\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"data\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"});\r",
+									"\r",
+									"//Negatif Test Case\r",
+									"//1\r",
+									"pm.test(\"Get Article by ID gagal (id tidak ditemukan)\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts/5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BOOKMARK",
+			"item": [
+				{
+					"name": "mark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Positif Test Case\r",
+									"pm.test(\"Bookmark berhasil (user login)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									"//Negatif Test Case\r",
+									"//1\r",
+									"// pm.test(\"Bookmark gagal (artikel sudah di-bookmark)\", function () {\r",
+									"//     pm.response.to.have.status(200);\r",
+									"//     pm.expect(pm.response.json().message).to.eql(\"Already bookmarked\");\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"//2\r",
+									"// pm.test(\"Bookmark gagal (tanpa login)\", function () {\r",
+									"//     pm.response.to.have.status(401);\r",
+									"// });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts/3/bookmark",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"3",
+								"bookmark"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Unmark berhasil (user login)\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"message\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Negatif Test Case\r",
+									"//1\r",
+									"pm.test(\"Unmark gagal (bookmark tidak ditemukan)\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//2\r",
+									"pm.test(\"Unmark gagal (tanpa login)\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{MOBILE_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/posts/5/bookmark",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"5",
+								"bookmark"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "myBookmarks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get My Bookmarks berhasil\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    // Pastikan ada key 'data'\r",
+									"    pm.expect(jsonData).to.have.property(\"data\");\r",
+									"\r",
+									"    // Pastikan 'data' berbentuk array\r",
+									"    pm.expect(jsonData.data).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//Negatif Test Case\r",
+									"// pm.test(\"Get My Bookmarks gagal (tanpa login)\", function () {\r",
+									"//     pm.response.to.have.status(401);\r",
+									"// });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/me/bookmarks",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"me",
+								"bookmarks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
